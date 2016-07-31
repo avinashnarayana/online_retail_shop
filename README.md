@@ -1,24 +1,27 @@
-# README
+# Online Retail Shop application
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is the retail shop application for
+[*Web Frameworks Repeat Assignment*]
+by [Avinash N Regulagadda](Stud ID: 2830339).
 
-Things you may want to cover:
+## Getting started
 
-* Ruby version
+To get started with the app, clone the repo and then install the needed gems:
 
-* System dependencies
+```
+$ bundle install --without production
+```
 
-* Configuration
+Next, migrate the database:
 
-* Database creation
+```
+$ rails db:migrate
+```
 
-* Database initialization
+If everything goes well you'll be ready to run the app in a local server:
 
-* How to run the test suite
+```
+$ rails server
+```
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+For more information, contact the author at avinash.narayana@gmail.com
