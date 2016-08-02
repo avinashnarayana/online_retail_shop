@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'session/cart'
+
+  resources :transactions
+  resources :orders
   resources :products
   root 'static_pages#home'
   get 'users/new'
@@ -8,6 +12,7 @@ Rails.application.routes.draw do
   
   get  '/signup',  to: 'users#new'
   post '/signup',  to: 'users#create'
+  get '/add_to_cart',  to: 'sessions#add_to_cart'
   resources :users
   
   

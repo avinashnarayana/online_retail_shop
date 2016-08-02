@@ -18,6 +18,17 @@ class SessionsController < ApplicationController
     redirect_to root_url
   end
   
+  def add_to_cart
+    product = Product.find_by(id: params[:id])
+    quantity = params[:quantity].to_i
+    if product && quantity > 0
+      session[:cart][:params[:id]]=quantity
+      flash.now[:success] = 'Successfully added to cart'
+    else
+      flash.now[:danger] = 'Error'
+    end
+    redirect_to product
+  end
   # Redirects to stored location (or to the default).
   def redirect_back_or(default)
     redirect_to(session[:forwarding_url] || default)

@@ -18,8 +18,12 @@
     <div class="stock"><%= @product.stock %></div>
   </div>
   <div class="col-sm-3">
-    <%= link_to 'Add to cart', "#", class: "btn btn-primary btn-block"%>
-    <%= link_to 'Buy Now', "#", class: "btn btn-success btn-block"%>
-    <%= link_to 'Back', products_path, class: "btn btn-default btn-block"%>
+    <form action = "<%= add_to_cart_url %>" method="get">
+      Quantity x <input type="number" name="quantity" value="1">
+      <input type="hidden" name="id" value=<%= @product.id %>>
+      <input type="submit" value="Add to cart" class= "btn btn-primary btn-block">
+      <%= link_to 'Buy Now', "#", class: "btn btn-success btn-block"%>
+      <%= link_to 'Back', products_path, class: "btn btn-default btn-block"%>
+    </form>
   </div>
 </div>
