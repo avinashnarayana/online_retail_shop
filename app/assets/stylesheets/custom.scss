@@ -187,3 +187,24 @@ footer {
     border-bottom: 1px solid $gray-lighter;
   }
 }
+
+/* Product Page */
+#show-product{
+  margin: 10px;
+  padding: 10px 0;
+}
+
+.product{
+  padding: 10px;
+  border: 1px solid $gray-lighter;
+  border-radius: 5px;
+  .name{
+    
+  }
+  
+}
+
+#products-index{
+  margin: 10px;
+  padding: 10px 0;
+}

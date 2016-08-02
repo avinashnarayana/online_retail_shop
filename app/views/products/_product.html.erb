@@ -1,0 +1,15 @@
+<div id="product-<%= product.id %>" class="col-sm-4 col-md-3 product">
+  <div class="center"><%= link_to image_tag("delivery.jpg", alt: "ORS logo", size: "200"), product %></div>
+  <div class="name center">
+      <%= link_to product.name, product %>
+      <% if !!current_user && current_user.role == 1 %>
+        <br/><%= link_to 'Edit', edit_product_path(product) %>
+        | <%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %>
+      <% end %>
+  </div>
+  <br/>
+  <div class="price">€<%= product.price %></div>
+  <br/>
+  <div class="decription"><%= product.description.truncate_words(5) %></div>
+  <div class="stock">Stock available:<%= product.stock %></div>
+</div>

@@ -1,0 +1,25 @@
+<% provide(:title, @product.name) %>
+<div class="container" id="show-product">
+  <div class="col-sm-3">
+    <%= link_to image_tag("delivery.jpg", alt: "ORS logo", size: "200"), @product %>
+  </div>
+  <div class="col-sm-6">
+    <div class="name">
+      <h1><%= @product.name %>
+      <% if !!current_user && current_user.role == 1 %>
+      | <%= link_to 'Edit', edit_product_path(@product) %>
+      | <%= link_to 'Destroy', @product, method: :delete, data: { confirm: 'Are you sure?' } %>
+      <% end %>
+      </h1>
+    </div>
+    <hr>
+    <div class="price"><%= @product.price %></div>
+    <div class="decription"><%= @product.description %></div>
+    <div class="stock"><%= @product.stock %></div>
+  </div>
+  <div class="col-sm-3">
+    <%= link_to 'Add to cart', "#", class: "btn btn-primary btn-block"%>
+    <%= link_to 'Buy Now', "#", class: "btn btn-success btn-block"%>
+    <%= link_to 'Back', products_path, class: "btn btn-default btn-block"%>
+  </div>
+</div>
