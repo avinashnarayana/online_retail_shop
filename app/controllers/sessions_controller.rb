@@ -4,7 +4,10 @@ class SessionsController < ApplicationController
 
   def create
     if params[:mobile].present? && params[:mobile]='android'
-      render 'new.json'
+      render json: {
+        error: "No such user; check the submitted email address",
+        status: 400
+      }
     end
     user = User.find_by(email: params[:session][:email].downcase)
     
