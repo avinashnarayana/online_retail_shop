@@ -4,10 +4,11 @@ class SessionsController < ApplicationController
 
   def create
     user = User.find_by(email: params[:session][:email].downcase)
+    if params[:mobile].present? && params[:mobile]='android'
+      render 'new.json'
+    end
     if user && user.authenticate(params[:session][:password])
-      if params[:mobile].present? && params[:mobile]='android'
-        render 'new.json'
-      end
+      
       log_in user
       redirect_back_or user
     else
