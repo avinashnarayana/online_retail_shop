@@ -1,0 +1,50 @@
+<% provide(:title, "Cart") %>
+<h1>Cart</h1>
+
+
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Unit Price</th>
+          <th>Quantity</th>
+          <th colspan="2">Total Price</th>
+        </tr>
+      </thead>
+    
+      <tbody>
+        <% total_price = 0 %>
+        <% @cart.keys.each do |product| %>
+            <% if product.instance_of? Product%>
+              <tr>
+                <td><%= link_to product.name, product %></td>
+                <th><%= product.price %></th>
+                <td>X <%= @cart[product] %></td>
+                <% total_price += product.price*@cart[product]%>
+                <td>= <%= product.price*@cart[product] %></td>
+                <td><%= link_to 'Delete', '#', data: { confirm: 'Are you sure?' } %></td>
+              </tr>
+            <%end%>
+        <% end %>
+        <tr>
+            <td colspan="3">Total = </td>
+            <td colspan="2"><%= total_price %></td>
+        </tr>
+      </tbody>
+    </table>
+    <%= form_for(@order) do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+
+      <%= f.label :delivery_name %>
+      <%= f.text_field :delivery_name, class: 'form-control' %>
+
+      <%= f.label :delivery_address %>
+      <%= f.text_area :delivery_address, class: 'form-control' %>
+
+      <%= f.submit "Place Order", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
+<br>

@@ -24,15 +24,33 @@ class OrdersController < ApplicationController
   # POST /orders
   # POST /orders.json
   def create
-    @order = Order.new(order_params)
-
-    respond_to do |format|
-      if @order.save
-        format.html { redirect_to @order, notice: 'Order was successfully created.' }
-        format.json { render :show, status: :created, location: @order }
+    if session.key?(:cart)
+      ActiveRecord::Base.transaction do
+      if logged_in?
+        @order = current_user.orders.new(order_params) 
       else
-        format.html { render :new }
-        format.json { render json: @order.errors, status: :unprocessable_entity }
+        @order = Order.new(order_params, user_id: 1)
+      end
+      respond_to do |format|
+        if @order.save
+          format.html { 
+            session[:cart].keys.each do |prod_id|
+              t = @order.transactions.create(product_id: prod_id, quantity: session[:cart][prod_id])
+              if !t.product.decrement!(:stock, t.quantity.to_i) || !t.save
+                flash[:danger] = "Error"
+                redirect_to cart_path
+              end
+            end
+            flash[:success] = 'Order was successfully created.'
+            session.delete(:cart)
+            redirect_to @order 
+          }
+          format.json { render :show, status: :created, location: @order }
+        else
+          format.html { render :new }
+          format.json { render json: @order.errors, status: :unprocessable_entity }
+        end
+      end
       end
     end
   end
@@ -69,6 +87,6 @@ class OrdersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def order_params
-      params.require(:order).permit(:delivery_name, :delivery_address, :order_updates, :user_id)
+      params.require(:order).permit(:delivery_name, :delivery_address)
     end
 end

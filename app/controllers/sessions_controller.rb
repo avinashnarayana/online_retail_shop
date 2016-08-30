@@ -1,15 +1,8 @@
 class SessionsController < ApplicationController
-  skip_before_action :verify_authenticity_token
   def new
   end
 
   def create
-    if params[:mobile].present? && params[:mobile]='android'
-      render json: {
-        error: "No such user; check the submitted email address",
-        status: 400
-      }
-    end
     user = User.find_by(email: params[:session][:email].downcase)
     
     if user && user.authenticate(params[:session][:password])
@@ -31,12 +24,26 @@ class SessionsController < ApplicationController
     product = Product.find_by(id: params[:id])
     quantity = params[:quantity].to_i
     if product && quantity > 0
-      session[:cart][:params[:id]]=quantity
-      flash.now[:success] = 'Successfully added to cart'
+      session[:cart] ||= Hash.new(0)
+      #if session[:cart].key?(params[:id])
+       # session[:cart].delete(params[:id])
+      #end
+      session[:cart][params[:id]]=quantity
+      flash[:success] = 'Successfully added to cart'+session[:cart].to_s
     else
-      flash.now[:danger] = 'Error'
+      flash[:danger] = 'Error'
     end
     redirect_to product
+  end
+  def show_cart
+    @cart = Hash.new(0)
+    if session.key?(:cart)
+      session[:cart].keys.each do |product_id|
+        @cart[Product.find_by(id: product_id)]= session[:cart][product_id]
+      end
+    end
+    @order = current_user.orders.build if logged_in?
+    @order = Order.new
   end
   # Redirects to stored location (or to the default).
   def redirect_back_or(default)
