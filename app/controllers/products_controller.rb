@@ -18,7 +18,7 @@ class ProductsController < ApplicationController
     if params.has_key?(:barcode)
       @product=Product.new(barcode: :barcode)
     else
-      @transfer = Transfer.new()
+      @product = Product.new()
     end
   end
   
