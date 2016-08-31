@@ -33,7 +33,7 @@ class ProductsController < ApplicationController
   # POST /products
   # POST /products.json
   def create
-    @product = Product.new(product_params)
+    @product = Product.new(product_params, stock:0)
     if @product.save
       flash[:success] = "Product successfully created."
       redirect_to @product
