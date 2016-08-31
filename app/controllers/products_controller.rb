@@ -15,7 +15,11 @@ class ProductsController < ApplicationController
 
   # GET /products/new
   def new
-    @product = Product.new
+    if params.has_key?(:barcode)
+      @product=Product.new(barcode: :barcode)
+    else
+      @transfer = Transfer.new()
+    end
   end
   
   def new_transfer

@@ -20,7 +20,7 @@ class TransfersController < ApplicationController
         @transfer = product.transfers.build
       else
         flash[:danger] = "Product does not exist"
-        redirect_to new_product_path
+        redirect_to new_product_path, barcode: params[:barcode]
       end
     else
       @transfer = Transfer.new()
