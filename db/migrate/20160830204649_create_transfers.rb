@@ -9,8 +9,6 @@ class CreateTransfers < ActiveRecord::Migration[5.0]
       t.text :details
 
       t.timestamps
-      add_foreign_key :transfers, :locations, column: :from_location
-      add_foreign_key :transfers, :locations, column: :to_location
     end
   end
 end
