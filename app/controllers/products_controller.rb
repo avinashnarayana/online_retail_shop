@@ -16,7 +16,7 @@ class ProductsController < ApplicationController
   # GET /products/new
   def new
     if params.has_key?(:barcode)
-      @product=Product.new(barcode: :barcode)
+      @product=Product.build(barcode: :barcode)
     else
       @product = Product.new()
     end
