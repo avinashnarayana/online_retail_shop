@@ -25,7 +25,7 @@ class TransactionsController < ApplicationController
   # POST /transactions.json
   def create
     @transaction = Transaction.new(transaction_params)
-
+    
     respond_to do |format|
       if @transaction.product.decrement!(:stock, @transaction.quantity.to_i) && @transaction.save
         format.html { redirect_to @transaction, notice: 'Transaction was successfully created.' }

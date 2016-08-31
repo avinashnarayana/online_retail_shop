@@ -20,4 +20,13 @@ class ApplicationController < ActionController::Base
           redirect_to login_url
         end
       end
+      
+      # Confirms shopkeeper.
+      def shopassistant
+        unless !!current_user && current_user.role > 0
+          store_location
+          flash[:danger] = "Please log in as a shopkeeper/shopassistant to access the page."
+          redirect_to login_url
+        end
+      end
 end

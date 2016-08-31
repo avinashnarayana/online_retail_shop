@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy]
-
+  before_action :shopkeeper,     only: [:edit, :update, :destroy]
   # GET /orders
   # GET /orders.json
   def index
@@ -36,8 +36,9 @@ class OrdersController < ApplicationController
           format.html { 
             session[:cart].keys.each do |prod_id|
               t = @order.transactions.create(product_id: prod_id, quantity: session[:cart][prod_id])
-              if !t.product.decrement!(:stock, t.quantity.to_i) || !t.save
+              if !t.product.stocks.find_by(location_id:1).decrement!(:quantity, t.quantity.to_i) || !t.save
                 flash[:danger] = "Error"
+                raise ActiveRecord::Rollback
                 redirect_to cart_path
               end
             end

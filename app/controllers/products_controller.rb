@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:show, :edit, :update, :destroy]
+  before_action :set_product, only: [:show, :edit, :update, :destroy, :new_transfer]
   before_action :shopkeeper, only: [:new, :edit, :update, :destroy]
   
   # GET /products
@@ -17,7 +17,11 @@ class ProductsController < ApplicationController
   def new
     @product = Product.new
   end
-
+  
+  def new_transfer
+    @transfer = @product.transfers.build
+    render :template => "transfers/new"
+  end
   # GET /products/1/edit
   def edit
   end
@@ -66,6 +70,6 @@ class ProductsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def product_params
-      params.require(:product).permit(:name, :description, :price, :stock)
+      params.require(:product).permit(:name, :description, :price, :stock, :barcode)
     end
 end

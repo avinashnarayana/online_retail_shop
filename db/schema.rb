@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160802051748) do
+ActiveRecord::Schema.define(version: 20160830222053) do
+
+  create_table "locations", force: :cascade do |t|
+    t.string   "barcode",                                 null: false
+    t.string   "name",       default: "Unnamed Location", null: false
+    t.text     "address"
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+  end
 
   create_table "orders", force: :cascade do |t|
     t.string   "delivery_name"
@@ -29,6 +37,19 @@ ActiveRecord::Schema.define(version: 20160802051748) do
     t.integer  "stock"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.string   "barcode"
+    t.index ["barcode"], name: "index_products_on_barcode"
+  end
+
+  create_table "stocks", force: :cascade do |t|
+    t.integer  "quantity"
+    t.integer  "location_id"
+    t.integer  "product_id"
+    t.text     "details"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["location_id"], name: "index_stocks_on_location_id"
+    t.index ["product_id"], name: "index_stocks_on_product_id"
   end
 
   create_table "transactions", force: :cascade do |t|
@@ -39,6 +60,21 @@ ActiveRecord::Schema.define(version: 20160802051748) do
     t.datetime "updated_at", null: false
     t.index ["order_id"], name: "index_transactions_on_order_id"
     t.index ["product_id"], name: "index_transactions_on_product_id"
+  end
+
+  create_table "transfers", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "from_location_id"
+    t.integer  "to_location_id"
+    t.integer  "product_id"
+    t.integer  "quantity"
+    t.text     "details"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["from_location_id"], name: "index_transfers_on_from_location_id"
+    t.index ["product_id"], name: "index_transfers_on_product_id"
+    t.index ["to_location_id"], name: "index_transfers_on_to_location_id"
+    t.index ["user_id"], name: "index_transfers_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|

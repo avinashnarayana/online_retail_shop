@@ -1,0 +1,36 @@
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for(transfer) do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+      
+        <div class="field">
+          <%= f.label :from_location_id %>
+          <%= f.collection_select(:from_location_id, Location.all, :id, :name, class: 'form-control', include_blank: "None", default:3)%>
+        </div>
+      
+        <div class="field">
+          <%= f.label :to_location_id %>
+          <%= f.collection_select(:to_location_id, Location.all, :id, :name, class: 'form-control', include_blank: true)%>
+        </div>
+      
+        <div class="field">
+          <%= f.label :product_id %>
+          <%= f.text_field :product_id, class: 'form-control' %>
+        </div>
+      
+        <div class="field">
+          <%= f.label :quantity %>
+          <%= f.number_field :quantity, class: 'form-control' %>
+        </div>
+      
+        <div class="field">
+          <%= f.label :details %>
+          <%= f.text_area :details, class: 'form-control' %>
+        </div>
+      
+        <div class="actions">
+          <%= f.submit(yield(:action), class: 'btn btn-primary') %>
+        </div>
+    <% end %>
+  </div>
+</div>

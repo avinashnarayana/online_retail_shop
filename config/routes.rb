@@ -1,8 +1,15 @@
 Rails.application.routes.draw do
+  resources :transfers
+  resources :stocks
+  resources :locations
   get 'session/cart'
 
   resources :orders
-  resources :products
+  resources :products do
+    member do 
+      get '/new_transfer', to: 'products#new_transfer'
+    end
+  end 
   root 'static_pages#home'
   get 'users/new'
   

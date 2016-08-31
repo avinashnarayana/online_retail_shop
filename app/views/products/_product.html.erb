@@ -1,3 +1,4 @@
+
 <div id="product-<%= product.id %>" class="col-sm-4 col-md-3 product">
   <div class="center"><%= link_to image_tag("delivery.jpg", alt: "ORS logo", size: "200"), product %></div>
   <div class="name center">
@@ -12,4 +13,5 @@
   <br/>
   <div class="decription"><%= product.description.truncate_words(5) %></div>
   <div class="stock">Stock available:<%= product.stock %></div>
+  <div class="stock">Stock :<%= product.stocks.sum(:quantity) %></div>
 </div>

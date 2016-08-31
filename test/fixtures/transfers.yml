@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  from_location: one
+  to_location: one
+  product: one
+  quantity: 1
+  details: MyText
+
+two:
+  user: two
+  from_location: two
+  to_location: two
+  product: two
+  quantity: 1
+  details: MyText

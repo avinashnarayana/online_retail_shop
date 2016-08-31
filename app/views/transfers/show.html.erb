@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @transfer.user %>
+</p>
+
+<p>
+  <strong>From location:</strong>
+  <%= @transfer.from_location %>
+</p>
+
+<p>
+  <strong>To location:</strong>
+  <%= @transfer.to_location %>
+</p>
+
+<p>
+  <strong>Product:</strong>
+  <%= @transfer.product %>
+</p>
+
+<p>
+  <strong>Quantity:</strong>
+  <%= @transfer.quantity %>
+</p>
+
+<p>
+  <strong>Details:</strong>
+  <%= @transfer.details %>
+</p>
+
+<%= link_to 'Edit', edit_transfer_path(@transfer) %> |
+<%= link_to 'Back', transfers_path %>

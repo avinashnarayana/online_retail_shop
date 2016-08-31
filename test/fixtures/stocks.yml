@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  quantity: 1
+  location: one
+  product: one
+  details: MyText
+
+two:
+  quantity: 1
+  location: two
+  product: two
+  details: MyText
