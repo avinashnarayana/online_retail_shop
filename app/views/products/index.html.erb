@@ -3,8 +3,7 @@
 <%= if !!current_user && current_user.role == 1
         link_to 'Add New Product', new_product_path, class: "btn btn-primary btn-block"
 end %>
-<div class="container-fluid", id="products-index">
+<div class="container-fluid center", id="products-index">
   <%= render @products %>
 </div>
-<%= link_to 'New Product', new_product_path %>
 </ul>

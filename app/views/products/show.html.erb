@@ -1,20 +1,24 @@
 <% provide(:title, @product.name) %>
 <div class="container" id="show-product">
   <div class="col-sm-3">
-    <%= link_to image_tag("delivery.jpg", alt: "ORS logo", size: "200"), @product %>
+    <%if @product.picture?%>
+      <%= link_to image_tag(@product.picture.url, alt: @product.name, size: "200"), @product %>
+    <% else %>
+      <%= link_to image_tag("delivery.jpg", alt: "Default Product Picture", size: "200"), @product %>
+    <% end %>
   </div>
   <div class="col-sm-6">
     <div class="name">
-      <h1><%= @product.name %>
+      <h1><%= @product.name %></h1>
+      <div class='center'>
       <% if !!current_user && current_user.role == 1 %>
       | <%= link_to 'Edit', edit_product_path(@product) %>
       | <%= link_to 'Destroy', @product, method: :delete, data: { confirm: 'Are you sure?' } %>
       <% end %>
-      
       <% if !!current_user && current_user.role > 0 %>
       | <%= link_to 'Transfer Stock', new_transfer_product_path(@product) %>
       <% end %>
-      </h1>
+      </div>
     </div>
     <hr>
     <div class="price">Price: <%= @product.price %></div>

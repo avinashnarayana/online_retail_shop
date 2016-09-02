@@ -1,6 +1,12 @@
 
 <div id="product-<%= product.id %>" class="col-sm-4 col-md-3 product">
-  <div class="center"><%= link_to image_tag("delivery.jpg", alt: "ORS logo", size: "200"), product %></div>
+  <div class="center">
+    <%if product.picture?%>
+      <%= link_to image_tag(product.picture.url, alt: product.name, size: "200"), product %>
+    <% else %>
+      <%= link_to image_tag("delivery.jpg", alt: "Default Product Picture", size: "200"), product %>
+    <% end %>
+  </div>
   <div class="name center">
       <%= link_to product.name, product %>
       <% if !!current_user && current_user.role == 1 %>
@@ -9,8 +15,8 @@
       <% end %>
   </div>
   <br/>
-  <div class="price">€<%= product.price %></div>
+  <div class="price">Price: €<%= product.price %></div>
   <br/>
-  <div class="decription"><%= product.description.truncate_words(5) %></div>
+  <div class="decription">Description: <%= product.description.truncate_words(5) %></div>
   <div class="stock">Stock available:<%= product.stocks.sum(:quantity) %></div>
 </div>
