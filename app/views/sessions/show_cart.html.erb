@@ -24,7 +24,7 @@
                 <td>X <%= @cart[product] %></td>
                 <% total_price += product.price*@cart[product]%>
                 <td>= <%= product.price*@cart[product] %></td>
-                <td><%= link_to 'Delete', '#', data: { confirm: 'Are you sure?' } %></td>
+                <td><%= link_to 'Delete', cart_path+'?delete_id='+product.id.to_s, data: { confirm: 'Are you sure?' } %></td>
               </tr>
             <%end%>
         <% end %>

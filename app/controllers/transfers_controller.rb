@@ -38,11 +38,11 @@ class TransfersController < ApplicationController
       @transfer = current_user.transfers.new(transfer_params)
       from_stock = Stock.create_with(quantity:0).find_or_create_by!(location_id:@transfer.from_location_id, product_id:@transfer.product_id)
       to_stock = Stock.create_with(quantity:0).find_or_create_by!(location_id:@transfer.to_location_id, product_id:@transfer.product_id)
-      if(from_stock.location_id!=3 && from_stock.quantity < @transfer.quantity)
+      if(from_stock.location.name!="Suppliers" && from_stock.quantity < @transfer.quantity)
         flash[:danger]="Not Enough Stock"
         render :new and return
       end
-      from_stock.decrement!(:quantity, @transfer.quantity.to_i) if(from_stock.location_id!=3)
+      from_stock.decrement!(:quantity, @transfer.quantity.to_i) if(from_stock.location.name!="Suppliers")
       to_stock.increment!(:quantity, @transfer.quantity.to_i)
       respond_to do |format|
         if @transfer.save

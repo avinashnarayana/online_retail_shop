@@ -1,10 +1,16 @@
 class OrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy]
-  before_action :shopkeeper,     only: [:edit, :update, :destroy]
+  before_action :shopassistant,     only: [:edit, :update, :destroy]
+  before_action :logged_in_user, only: [:show, :index]
   # GET /orders
   # GET /orders.json
   def index
-    @orders = Order.all
+    if current_user.role>0
+      @orders = Order.all
+    else
+      @orders = current_user.orders
+    end
+      
   end
 
   # GET /orders/1
@@ -36,7 +42,7 @@ class OrdersController < ApplicationController
           format.html { 
             session[:cart].keys.each do |prod_id|
               t = @order.transactions.create(product_id: prod_id, quantity: session[:cart][prod_id])
-              if !t.product.stocks.find_by(location_id:1).decrement!(:quantity, t.quantity.to_i) || !t.save
+              if !t.product.stocks.find_by(location_id: Location.find_by(name:"Online Sales Stock")).decrement!(:quantity, t.quantity.to_i) || !t.save
                 flash[:danger] = "Error"
                 raise ActiveRecord::Rollback
                 redirect_to cart_path

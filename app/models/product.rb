@@ -3,7 +3,6 @@ class Product < ApplicationRecord
   has_many :transfers
   has_many :locations, through: :stocks
   
-  default_scope -> { order(updated_at: :desc) }
   mount_uploader :picture, PictureUploader
   validates :name, presence: true
   validates :price, presence: true

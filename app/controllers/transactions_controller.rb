@@ -1,6 +1,6 @@
 class TransactionsController < ApplicationController
   before_action :set_transaction, only: [:show, :edit, :update, :destroy]
-
+  before_action :shopkeeper, only: [:edit, :update, :destroy]
   # GET /transactions
   # GET /transactions.json
   def index
@@ -27,7 +27,7 @@ class TransactionsController < ApplicationController
     @transaction = Transaction.new(transaction_params)
     
     respond_to do |format|
-      if @transaction.product.stocks.find_by(location_id:1).decrement!(:quantity, @transaction.quantity.to_i) && @transaction.save
+      if @transaction.product.stocks.find_by(location_id:Location.find_by(name: "Online Sales Stock").id).decrement!(:quantity, @transaction.quantity.to_i) && @transaction.save
         format.html { redirect_to @transaction, notice: 'Transaction was successfully created.' }
         format.json { render :show, status: :created, location: @transaction }
       else

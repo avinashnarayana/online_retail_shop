@@ -18,10 +18,10 @@
   <tbody>
     <% @transfers.each do |transfer| %>
       <tr>
-        <td><%= transfer.user %></td>
-        <td><%= transfer.from_location %></td>
-        <td><%= transfer.to_location %></td>
-        <td><%= transfer.product %></td>
+        <td><%= transfer.user.name %></td>
+        <td><%= transfer.from_location.name %></td>
+        <td><%= transfer.to_location.name %></td>
+        <td><%= transfer.product.name %></td>
         <td><%= transfer.quantity %></td>
         <td><%= transfer.details %></td>
         <td><%= link_to 'Show', transfer %></td>

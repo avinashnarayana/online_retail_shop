@@ -38,6 +38,10 @@ class SessionsController < ApplicationController
   def show_cart
     @cart = Hash.new(0)
     if session.key?(:cart)
+      if params.has_key?(:delete_id)
+        session[:cart].delete(params[:delete_id])
+        redirect_back_or(cart_path)
+      end
       session[:cart].keys.each do |product_id|
         @cart[Product.find_by(id: product_id)]= session[:cart][product_id]
       end
